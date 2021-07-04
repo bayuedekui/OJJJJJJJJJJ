@@ -32,6 +32,7 @@ public class lc117_填充每个节点的下一个右侧节点指针II {
 
         traceBack(node.left, node.right);
 
+        return node;
     }
 
     public void traceBack(Node left, Node right) {
