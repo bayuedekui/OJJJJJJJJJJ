@@ -4,7 +4,7 @@ import java.util.*;
 
 public class lc113_路径总和II {
 
-
+    // 采用bfs遍历
     /*Map<TreeNode, TreeNode> map = new HashMap<>();
     List<List<Integer>> res = new ArrayList<>();
 
@@ -63,7 +63,8 @@ public class lc113_路径总和II {
     }*/
 
 
-    public List<List<Integer>> pathSum(TreeNode root, int targetSum){
+    // 采用dfs
+    /*public List<List<Integer>> pathSum(TreeNode root, int targetSum){
         dfs(root,targetSum);
         return res;
     }
@@ -89,5 +90,99 @@ public class lc113_路径总和II {
         //退出到上一层，再进行到下一层
         deque.pollLast();
 
+    }*/
+
+
+    // 采用dfs
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        dfs(root, targetSum);
+        return res;
     }
+
+    List<List<Integer>> res = new ArrayList<>();
+    Deque<Integer> que = new LinkedList<>();
+
+    public void dfs(TreeNode root, int targetSum) {
+        if (root == null) {
+            return;
+        }
+
+        // 像路径中添加路径
+        que.offerLast(root.val);
+        targetSum -= root.val;
+
+        if (root.left == null && root.right == null) {
+            if (targetSum == 0) {
+                res.add(new LinkedList<>(que));
+            }
+        }
+
+        dfs(root.left, targetSum);
+        dfs(root.right, targetSum);
+
+        // 退到上一层进行下面的遍历
+        que.pollLast();
+    }
+
+
+    // 采用bfs
+    public List<List<Integer>> pathSum1(TreeNode root, int targetSum) {
+        // 先用bfs找出符合条件的所有叶子节点，然后通过叶子节点找出一条父节点的路
+        if (root == null) {
+            return null;
+        }
+
+        List<List<Integer>> res = new ArrayList<>();
+        Map<TreeNode, TreeNode> map = new HashMap<>();
+
+        Queue<TreeNode> queTree = new LinkedList<>();
+        Queue<Integer> queVal = new LinkedList<>();
+        queTree.offer(root);
+        queVal.offer(root.val);
+
+
+        while (!queTree.isEmpty()) {
+            TreeNode tmpTree = queTree.poll();
+            Integer val = queVal.poll();
+            if (tmpTree.left == null && tmpTree.right == null) {
+                if (val == targetSum) {
+                    // 该叶子节点时符合条件的
+                    res.add(findParent(map, tmpTree, root));
+                }
+
+            }
+
+            if (tmpTree.left != null) {
+                queTree.offer(tmpTree.left);
+                queVal.offer(val + tmpTree.left.val);
+                map.put(tmpTree.left, tmpTree);//将父节点存入
+            }
+
+            if (tmpTree.right != null) {
+                queTree.offer(tmpTree.right);
+                queVal.offer(val + tmpTree.right.val);  //将父节点存入
+                map.put(tmpTree.right, tmpTree);
+            }
+
+        }
+
+        return res;
+    }
+
+
+    public List<Integer> findParent(Map<TreeNode, TreeNode> map, TreeNode leaf, TreeNode root) {
+        List<Integer> path = new ArrayList<>();
+
+        while (map.get(leaf) != null) {
+            path.add(leaf.val);
+            leaf = map.get(leaf);
+        }
+        path.add(root.val);
+
+        Collections.reverse(path);
+
+        return path;
+    }
+
+
 }

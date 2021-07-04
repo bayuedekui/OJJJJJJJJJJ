@@ -50,4 +50,47 @@ public class lc117_填充每个节点的下一个右侧节点指针II {
         traceBack(left.right, right.left);
 
     }
+
+
+    public Node connect1(Node node) {
+        if (node == null) {
+            return null;
+        }
+
+        if (node != null) {
+            node.next = null;
+        }
+
+        traceBack1(node.left, node.right);
+
+        return node;
+    }
+
+    public void traceBack1(Node left, Node right) {
+        if (left == null || right == null) {
+            return;
+        }
+
+        left.next = right;
+
+        // 同一父节点
+        traceBack1(left.left, left.right);
+        traceBack1(right.left, right.right);
+
+        // 不同父节点
+        if (left.right != null && right.left != null) {
+            traceBack1(left.right, right.left);
+        }
+        if (left.right != null && right.left == null) {
+            traceBack1(left.right, right.right);
+        }
+        if (left.right == null && right.left != null) {
+            traceBack1(left.left, right.left);
+        }
+        if (left.right == null && right.left == null) {
+            traceBack1(left.left, right.right);
+        }
+
+
+    }
 }
