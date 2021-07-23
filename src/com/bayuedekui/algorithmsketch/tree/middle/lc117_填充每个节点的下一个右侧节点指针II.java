@@ -1,19 +1,19 @@
 package com.bayuedekui.algorithmsketch.tree.middle;
 
-class Node {
+class NNode {
     public int val;
-    public Node left;
-    public Node right;
-    public Node next;
+    public NNode left;
+    public NNode right;
+    public NNode next;
 
-    public Node() {
+    public NNode() {
     }
 
-    public Node(int _val) {
+    public NNode(int _val) {
         val = _val;
     }
 
-    public Node(int _val, Node _left, Node _right, Node _next) {
+    public NNode(int _val, NNode _left, NNode _right, NNode _next) {
         val = _val;
         left = _left;
         right = _right;
@@ -22,7 +22,7 @@ class Node {
 }
 
 public class lc117_填充每个节点的下一个右侧节点指针II {
-    public Node connect(Node node) {
+    public NNode connect(NNode node) {
         if (node == null) {
             return null;
         }
@@ -35,7 +35,7 @@ public class lc117_填充每个节点的下一个右侧节点指针II {
         return node;
     }
 
-    public void traceBack(Node left, Node right) {
+    public void traceBack(NNode left, NNode right) {
         if (left == null || right == null) {
             return;
         }
@@ -52,7 +52,7 @@ public class lc117_填充每个节点的下一个右侧节点指针II {
     }
 
 
-    public Node connect1(Node node) {
+    public NNode connect1(NNode node) {
         if (node == null) {
             return null;
         }
@@ -66,7 +66,7 @@ public class lc117_填充每个节点的下一个右侧节点指针II {
         return node;
     }
 
-    public void traceBack1(Node left, Node right) {
+    public void traceBack1(NNode left, NNode right) {
         if (left == null || right == null) {
             return;
         }
