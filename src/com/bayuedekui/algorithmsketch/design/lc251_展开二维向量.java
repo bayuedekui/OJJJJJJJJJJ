@@ -1,4 +1,4 @@
-package com.bayuedekui.algorithmsketch;
+package com.bayuedekui.algorithmsketch.design;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -47,3 +47,4 @@ public class lc251_展开二维向量 {
         return list.isEmpty();
     }
 }
+o
