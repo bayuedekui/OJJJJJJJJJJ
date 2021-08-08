@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class lc146_LRU缓存机制 {
-    class NewLinkedNode() {
+    class NewLinkedNode {
         int key;
         int value;
         NewLinkedNode pre;

@@ -47,4 +47,3 @@ public class lc251_展开二维向量 {
         return list.isEmpty();
     }
 }
-o
