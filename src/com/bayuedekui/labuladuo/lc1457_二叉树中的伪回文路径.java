@@ -111,7 +111,7 @@ class lc257_二叉树的所有路径 {
     LinkedList<String> path = new LinkedList<>();
 
     public List<String> binaryTreePaths(TreeNode root) {
-
+        return null;
 
     }
 
