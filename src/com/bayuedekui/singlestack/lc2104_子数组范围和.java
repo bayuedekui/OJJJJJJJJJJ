@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class lc2104_子数组范围和 {
+    // 先存字典法
     public long subArrayRanges(int[] nums) {
         // 我想到的时穷举所有的子数组，然后取出最大最小进行做差
         // 先将nums按照升序排序，长度为二的子数组开始，取出nums[j]与numsd[j+i-1]进行做差求和
@@ -38,7 +39,24 @@ public class lc2104_子数组范围和 {
         return res;
     }
 
+    // 采用变量代替dp数组的方法
+    public long subArrayRanges3(int[] nums) {
+        int len = nums.length;
+        int res = 0;
+        // 因为dp[l][r][0/1]只和l,r-1相关，所以用min变量和max变量替代dp数组
+        for (int i = 0; i < len; i++) {
+            int min = nums[i], max = nums[i];
+            for (int j = i + 1; j < len; j++) {
+                min = Math.min(min, nums[j]);
+                max = Math.max(max, nums[j]);
+                res += max - min;
+            }
+        }
+        return res;
+    }
 
+
+    // 暴力法
     public long subArrayRanges2(int[] nums) {
         // 采用暴力，穷举每一个子数组出来
         int len = nums.length;
