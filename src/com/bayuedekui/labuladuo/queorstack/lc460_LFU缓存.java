@@ -110,11 +110,6 @@ public class lc460_LFU缓存 {
 
 
     public static void main(String[] args) {
-        HashMap<Integer, List<Integer>> freqToKey = new HashMap<>();
-
-        freqToKey.put(1, new ArrayList<>(1));
-        List<Integer> newKeys = freqToKey.putIfAbsent(2, 1);
-        System.out.println(newKeys);
 
     }
 
