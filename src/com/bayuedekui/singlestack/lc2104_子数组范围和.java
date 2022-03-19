@@ -2,6 +2,7 @@ package com.bayuedekui.singlestack;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Stack;
 
 public class lc2104_子数组范围和 {
     // 先存字典法
@@ -70,4 +71,65 @@ public class lc2104_子数组范围和 {
         }
         return res;
     }
+
+    // 采用单调栈的方法
+    public long subArrayRanges4(int[] nums) {
+        // 计算出nums的所有子数组最小值之和和最大值之和，然后用最大值之和减去最小之和
+        int len = nums.length;
+        int[] minLeft = new int[len];
+        int[] minRight = new int[len];
+        int[] maxLeft = new int[len];
+        int[] maxRight = new int[len];
+
+        Stack<Integer> stack = new Stack<>();
+        // 寻找nums[i]为最大值时的左边界
+        for (int i = 0; i < len; i++) {
+            while (!stack.isEmpty() && nums[stack.peek()] <= nums[i]) {
+                stack.pop();
+            }
+            maxLeft[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(i);
+        }
+        stack.clear();
+        // 寻找nums[i]为最大值的右边界
+        for (int i = len - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && nums[stack.peek()] < nums[i]) {
+                stack.pop();
+            }
+            maxRight[i] = stack.isEmpty() ? len : stack.peek();
+            stack.push(i);
+        }
+
+        stack.clear();
+        // 寻找nums[i]作为最小值的左边界
+        for (int i = 0; i < len; i++) {
+            while (!stack.isEmpty() && nums[stack.peek()] >= nums[i]) {
+                stack.pop();
+            }
+            minLeft[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(i);
+        }
+
+        stack.clear();
+        // 寻找nums[i]作为最小值的右边界
+        for (int i = len - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && nums[stack.peek()] > nums[i]) {
+                stack.pop();
+            }
+            minRight[i] = stack.isEmpty() ? len : stack.peek();
+            stack.push(i);
+        }
+
+        long minSum = 0;
+        long maxSum = 0;
+        for (int i = 0; i < len; i++) {
+            minSum +=  ((long) (i - minLeft[i]) * (minRight[i] - i)) * nums[i];
+            maxSum +=  ((long) (i - maxLeft[i]) * (maxRight[i] - i)) * nums[i];
+        }
+        System.out.println("minSum："+minSum);
+        System.out.println("maxSum："+maxSum);
+        return maxSum - minSum;
+    }
+
+
 }
