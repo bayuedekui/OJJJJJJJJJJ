@@ -2,7 +2,6 @@ package com.bayuedekui.unionfind;
 
 import java.util.HashMap;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class lc721_账户合并 {
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
